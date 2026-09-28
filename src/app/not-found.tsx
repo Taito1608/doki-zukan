@@ -7,7 +7,7 @@ export default function NotFound() {
       <Icon name="search" size={48} strokeWidth={1.75} className="text-stone-400" />
       <h1 className="mt-3 text-xl font-bold">ページが見つかりません</h1>
       <p className="mt-2 text-sm text-stone-600">退会した同期のページか、URLが間違っている可能性があります。</p>
-      <Link href="/" className="mt-8 rounded-2xl bg-brand-500 px-8 py-3 font-bold text-white">
+      <Link href="/" className="cut mt-8 bg-brand-500 px-10 py-3.5 font-bold text-white">
         ホームへ戻る
       </Link>
     </main>

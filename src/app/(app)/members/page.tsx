@@ -3,6 +3,8 @@ import { attachPhotoUrls, getAllProfiles, requireProfile } from "@/lib/data";
 import { findCommonPoints } from "@/lib/common";
 import { JOB_TYPES, PREFECTURES } from "@/lib/constants";
 import { Avatar } from "@/components/Avatar";
+import { Icon } from "@/components/Icon";
+import { PageHeading } from "@/components/ui";
 
 type Search = { q?: string; hometown?: string; job?: string; hobby?: string };
 
@@ -38,23 +40,27 @@ export default async function MembersPage({ searchParams }: { searchParams: Prom
   const withPhotos = await attachPhotoUrls(filtered);
   const isFiltered = !!(q || hometown || job || hobby);
 
+  const fieldClass =
+    "w-full border-b border-stone-300 bg-transparent py-3 outline-none focus:border-brand-500";
+
   return (
     <main>
-      <h1 className="mb-4 text-2xl font-black">同期一覧</h1>
+      <PageHeading en="MEMBERS">同期一覧</PageHeading>
 
-      <form className="space-y-2 rounded-2xl bg-white p-3 shadow-sm">
-        <input
-          name="q"
-          defaultValue={q}
-          placeholder="名前・趣味・出身地などで検索"
-          className="w-full rounded-xl border border-stone-300 px-4 py-3 outline-none focus:border-brand-500"
-        />
-        <div className="flex gap-2">
-          <select
-            name="hometown"
-            defaultValue={hometown}
-            className="w-1/2 rounded-xl border border-stone-300 bg-white px-3 py-3 outline-none"
-          >
+      <form className="cut space-y-3 bg-panel px-4 pt-2 pb-4">
+        <div className="relative">
+          <Icon name="search" size={18} className="pointer-events-none absolute top-1/2 left-0 -translate-y-1/2 text-stone-400" />
+          <input
+            name="q"
+            type="search"
+            enterKeyHint="search"
+            defaultValue={q}
+            placeholder="名前・趣味・出身地などで検索"
+            className={`${fieldClass} pl-7`}
+          />
+        </div>
+        <div className="flex gap-4">
+          <select name="hometown" defaultValue={hometown} className={fieldClass} aria-label="出身地">
             <option value="">出身地：すべて</option>
             {PREFECTURES.map((p) => (
               <option key={p} value={p}>
@@ -62,11 +68,7 @@ export default async function MembersPage({ searchParams }: { searchParams: Prom
               </option>
             ))}
           </select>
-          <select
-            name="job"
-            defaultValue={job}
-            className="w-1/2 rounded-xl border border-stone-300 bg-white px-3 py-3 outline-none"
-          >
+          <select name="job" defaultValue={job} className={fieldClass} aria-label="職種">
             <option value="">職種：すべて</option>
             {JOB_TYPES.map((j) => (
               <option key={j} value={j}>
@@ -76,25 +78,30 @@ export default async function MembersPage({ searchParams }: { searchParams: Prom
           </select>
         </div>
         {hobby && <input type="hidden" name="hobby" value={hobby} />}
-        <div className="flex gap-2">
-          <button className="flex-1 rounded-xl bg-stone-800 py-3 font-bold text-white active:bg-stone-900">
-            検索
-          </button>
+        <div className="flex items-center gap-4 pt-1">
+          <button className="cut flex-1 bg-ink py-3 font-bold text-white active:bg-black">検索</button>
           {isFiltered && (
-            <Link href="/members" className="rounded-xl px-4 py-3 text-sm text-stone-500 underline">
+            <Link href="/members" className="text-sm text-stone-500 underline">
               条件をクリア
             </Link>
           )}
         </div>
       </form>
 
-      {hobby && (
-        <p className="mt-3 text-sm">
-          趣味「<b>{hobby}</b>」で絞り込み中
+      <div className="mt-6 mb-3 flex items-baseline justify-between border-b border-stone-200 pb-2">
+        <p className="text-sm text-stone-500">
+          {hobby ? (
+            <>
+              趣味「<b className="text-ink">{hobby}</b>」
+            </>
+          ) : (
+            "すべての同期"
+          )}
         </p>
-      )}
-
-      <p className="mt-4 mb-2 text-sm text-stone-500">{filtered.length}人</p>
+        <p className="text-sm text-stone-500">
+          <span className="mr-0.5 text-lg font-semibold text-ink">{filtered.length}</span>人
+        </p>
+      </div>
 
       <ul className="grid grid-cols-2 gap-3">
         {withPhotos.map((p) => {
@@ -104,15 +111,15 @@ export default async function MembersPage({ searchParams }: { searchParams: Prom
             <li key={p.id}>
               <Link
                 href={`/members/${p.id}`}
-                className="flex h-full flex-col items-center rounded-2xl bg-white p-4 text-center shadow-sm active:bg-stone-50"
+                className="cut flex h-full flex-col items-center bg-panel px-3 pt-5 pb-4 text-center active:bg-stone-200"
               >
                 <Avatar name={p.display_name} url={p.photo_url} size={72} />
-                <p className="mt-2 line-clamp-2 font-bold">{p.display_name}</p>
-                <p className="text-xs text-stone-500">{p.hometown ?? " "}</p>
+                <p className="mt-3 line-clamp-2 font-bold">{p.display_name}</p>
+                <p className="mt-0.5 text-xs text-stone-500">{p.hometown ?? " "}</p>
                 {isMe ? (
-                  <span className="mt-2 rounded-full bg-stone-100 px-2 py-0.5 text-xs text-stone-600">あなた</span>
+                  <span className="mt-2 text-[11px] font-semibold tracking-wider text-stone-500">あなた</span>
                 ) : common > 0 ? (
-                  <span className="mt-2 rounded-full bg-brand-50 px-2 py-0.5 text-xs font-bold text-brand-700">
+                  <span className="mt-2 border-b-2 border-brand-500 text-[11px] font-bold text-brand-700">
                     共通点 {common}
                   </span>
                 ) : null}
@@ -123,7 +130,7 @@ export default async function MembersPage({ searchParams }: { searchParams: Prom
       </ul>
 
       {filtered.length === 0 && (
-        <p className="mt-6 text-center text-sm text-stone-500">条件に合う同期が見つかりませんでした。</p>
+        <p className="mt-10 text-center text-sm text-stone-500">条件に合う同期が見つかりませんでした。</p>
       )}
     </main>
   );

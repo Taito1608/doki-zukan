@@ -7,7 +7,7 @@ export default function manifest(): MetadataRoute.Manifest {
     description: "同期のプロフィールと共通点、誕生日の寄せ書き",
     start_url: "/",
     display: "standalone",
-    background_color: "#fafaf9",
+    background_color: "#ffffff",
     theme_color: "#f97316",
     lang: "ja",
     icons: [

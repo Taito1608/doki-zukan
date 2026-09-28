@@ -1,4 +1,5 @@
-const COLORS = ["#fb923c", "#f472b6", "#a78bfa", "#60a5fa", "#34d399", "#facc15", "#f87171", "#2dd4bf"];
+// 写真がない人の背景色（暖色系でそろえる）
+const COLORS = ["#f97316", "#f59e0b", "#f472b6", "#fb7185", "#e0875a", "#ea8c55", "#ec6f8e", "#d9774b"];
 
 function colorFor(name: string) {
   let h = 0;

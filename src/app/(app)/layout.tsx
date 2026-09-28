@@ -6,7 +6,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
 
   return (
     <>
-      <div className="mx-auto min-h-dvh max-w-md px-4 pt-6 pb-28">{children}</div>
+      <div className="mx-auto min-h-dvh max-w-md px-5 pt-8 pb-28">{children}</div>
       <BottomNav myId={user.id} />
     </>
   );

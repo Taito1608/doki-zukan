@@ -34,7 +34,7 @@ export function InstallHint() {
   }
 
   return (
-    <div className="relative rounded-2xl border border-brand-200 bg-brand-50 p-4 text-sm leading-relaxed">
+    <div className="cut relative border-b-[3px] border-brand-500 bg-panel p-5 text-sm leading-relaxed">
       <button onClick={dismiss} className="absolute top-2 right-3 text-lg text-stone-400" aria-label="閉じる">
         ×
       </button>
