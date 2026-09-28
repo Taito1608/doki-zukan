@@ -3,7 +3,6 @@ export type Profile = {
   display_name: string;
   photo_path: string | null;
   job_type: string | null;
-  department: string | null;
   hometown: string | null;
   hobbies: string[];
   birth_month: number | null;

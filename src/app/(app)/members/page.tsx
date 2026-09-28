@@ -27,7 +27,6 @@ export default async function MembersPage({ searchParams }: { searchParams: Prom
     if (needle) {
       const hit =
         includes(p.display_name, needle) ||
-        includes(p.department, needle) ||
         includes(p.hometown, needle) ||
         includes(p.message, needle) ||
         p.hobbies.some((h) => includes(h, needle));
@@ -47,7 +46,7 @@ export default async function MembersPage({ searchParams }: { searchParams: Prom
         <input
           name="q"
           defaultValue={q}
-          placeholder="名前・趣味・配属などで検索"
+          placeholder="名前・趣味・出身地などで検索"
           className="w-full rounded-xl border border-stone-300 px-4 py-3 outline-none focus:border-brand-500"
         />
         <div className="flex gap-2">

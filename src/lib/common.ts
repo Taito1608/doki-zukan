@@ -53,10 +53,6 @@ export function findCommonPoints(me: Profile, other: Profile): CommonPoint[] {
     }
   }
 
-  if (me.department && me.department === other.department) {
-    points.push({ icon: "building", label: `配属（希望）が同じ：${me.department}` });
-  }
-
   if (me.job_type && me.job_type === other.job_type && me.job_type !== "その他") {
     points.push({ icon: "briefcase", label: `同じ${me.job_type}` });
   }
