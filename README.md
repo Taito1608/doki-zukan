@@ -49,9 +49,13 @@
      「テスト」のままだと、テストユーザーに登録した人しかログインできません。
 3. **認証情報 → 認証情報を作成 → OAuthクライアントID** で、次のとおり作成します。
    - 種類：**ウェブアプリケーション**
+   - 承認済みの JavaScript 生成元：`http://localhost`、`http://localhost:3000`、`https://<あなたのアプリ>.vercel.app`
    - 承認済みのリダイレクトURI：`https://<SupabaseのプロジェクトID>.supabase.co/auth/v1/callback`
 4. 発行された **クライアントID** と **クライアントシークレット** を、
    Supabase の **Authentication → Sign In / Providers → Google** に貼り付けて有効にします。
+5. 同じ **クライアントID** を、環境変数 `NEXT_PUBLIC_GOOGLE_CLIENT_ID` に設定します（手順3・4）。
+   Google のボタンをアプリ内に表示してログインするため、Google の画面に Supabase の URL ではなく
+   アプリのドメインが表示されます。未設定の場合は、Supabase 経由のログインになります。
 
 ### 3. ローカルで動かす
 
@@ -68,7 +72,7 @@ Supabase の **Authentication → URL Configuration** の **Redirect URLs** に�
 
 1. このフォルダを GitHub のリポジトリに push します。
 2. https://vercel.com で **Add New → Project** からそのリポジトリを選びます。
-3. **Environment Variables** に `NEXT_PUBLIC_SUPABASE_URL` と `NEXT_PUBLIC_SUPABASE_ANON_KEY` を設定し、Deploy します。
+3. **Environment Variables** に `NEXT_PUBLIC_SUPABASE_URL`、`NEXT_PUBLIC_SUPABASE_ANON_KEY`、`NEXT_PUBLIC_GOOGLE_CLIENT_ID` を設定し、Deploy します。
 4. Supabase の **Authentication → URL Configuration** を次のとおり設定します。
    - **Site URL**：`https://<あなたのアプリ>.vercel.app`
    - **Redirect URLs**：`https://<あなたのアプリ>.vercel.app/**` を追加
