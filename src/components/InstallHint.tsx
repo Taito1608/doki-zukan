@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { Icon } from "./Icon";
 
 const KEY = "install-hint-dismissed";
 
@@ -37,7 +38,10 @@ export function InstallHint() {
       <button onClick={dismiss} className="absolute top-2 right-3 text-lg text-stone-400" aria-label="閉じる">
         ×
       </button>
-      <p className="font-bold">📲 ホーム画面に追加しよう</p>
+      <p className="flex items-center gap-1.5 font-bold">
+        <Icon name="smartphone" size={18} className="text-brand-600" />
+        ホーム画面に追加しよう
+      </p>
       {isIOS ? (
         <p className="mt-1 text-stone-700">
           Safariの下にある <b>共有ボタン（□に↑）</b> →「<b>ホーム画面に追加</b>」をタップすると、アプリのようにすぐ開けます。

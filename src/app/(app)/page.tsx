@@ -5,6 +5,7 @@ import { findCommonPoints } from "@/lib/common";
 import { UPCOMING_DAYS } from "@/lib/constants";
 import { Avatar } from "@/components/Avatar";
 import { InstallHint } from "@/components/InstallHint";
+import { Icon } from "@/components/Icon";
 
 export default async function HomePage() {
   const { profile: me } = await requireProfile();
@@ -51,14 +52,17 @@ export default async function HomePage() {
           href={`/members/${me.id}/birthday`}
           className="block rounded-3xl bg-gradient-to-br from-brand-500 to-pink-500 p-5 text-white shadow-md"
         >
-          <p className="text-3xl">🎉</p>
+          <Icon name="party" size={32} />
           <p className="mt-1 text-xl font-black">お誕生日おめでとうございます！</p>
           <p className="mt-1 text-sm opacity-90">同期からの寄せ書きを見る →</p>
         </Link>
       )}
 
       <section>
-        <h2 className="mb-3 text-lg font-bold">🎂 今日の誕生日</h2>
+        <h2 className="mb-3 flex items-center gap-2 text-lg font-bold">
+          <Icon name="cake" className="text-brand-500" />
+          今日の誕生日
+        </h2>
         {othersToday.length === 0 ? (
           <p className="rounded-2xl bg-white p-4 text-sm text-stone-500 shadow-sm">今日が誕生日の同期はいません。</p>
         ) : (
@@ -74,9 +78,10 @@ export default async function HomePage() {
                 </Link>
                 <Link
                   href={`/members/${p.id}/birthday`}
-                  className="mt-3 block rounded-xl bg-brand-500 py-3 text-center font-bold text-white active:bg-brand-600"
+                  className="mt-3 flex items-center justify-center gap-2 rounded-xl bg-brand-500 py-3 font-bold text-white active:bg-brand-600"
                 >
-                  寄せ書きを書く ✍️
+                  <Icon name="pen" size={18} />
+                  寄せ書きを書く
                 </Link>
               </li>
             ))}
@@ -86,7 +91,10 @@ export default async function HomePage() {
 
       {upcoming.length > 0 && (
         <section>
-          <h2 className="mb-3 text-lg font-bold">📅 もうすぐ誕生日</h2>
+          <h2 className="mb-3 flex items-center gap-2 text-lg font-bold">
+            <Icon name="calendar" className="text-brand-500" />
+            もうすぐ誕生日
+          </h2>
           <ul className="divide-y divide-stone-100 rounded-2xl bg-white shadow-sm">
             {upcoming.map(({ p, days }) => (
               <li key={p.id}>
@@ -107,7 +115,10 @@ export default async function HomePage() {
       )}
 
       <section>
-        <h2 className="mb-3 text-lg font-bold">✨ あなたと共通点が多い同期</h2>
+        <h2 className="mb-3 flex items-center gap-2 text-lg font-bold">
+          <Icon name="sparkles" className="text-brand-500" />
+          あなたと共通点が多い同期
+        </h2>
         {matches.length === 0 ? (
           <p className="rounded-2xl bg-white p-4 text-sm leading-relaxed text-stone-500 shadow-sm">
             まだ見つかっていません。
@@ -124,8 +135,13 @@ export default async function HomePage() {
                   <Avatar name={p.display_name} url={photo(p.id)} size={48} />
                   <div className="min-w-0 flex-1">
                     <p className="font-bold">{p.display_name}</p>
-                    <p className="truncate text-xs text-stone-600">
-                      {points.map((pt) => `${pt.icon}${pt.label}`).join("　")}
+                    <p className="flex gap-3 overflow-hidden text-xs whitespace-nowrap text-stone-600">
+                      {points.map((pt) => (
+                        <span key={pt.label} className="flex items-center gap-1">
+                          <Icon name={pt.icon} size={14} className="text-brand-500" />
+                          {pt.label}
+                        </span>
+                      ))}
                     </p>
                   </div>
                 </Link>
@@ -137,9 +153,10 @@ export default async function HomePage() {
 
       <Link
         href="/members"
-        className="block rounded-2xl border-2 border-stone-800 py-4 text-center text-lg font-bold active:bg-stone-100"
+        className="flex items-center justify-center gap-2 rounded-2xl border-2 border-stone-800 py-4 text-lg font-bold active:bg-stone-100"
       >
-        👥 同期を見てみる
+        <Icon name="users" />
+        同期を見てみる
       </Link>
     </main>
   );

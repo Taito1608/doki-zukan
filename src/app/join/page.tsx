@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import { getSession } from "@/lib/data";
 import { signOut } from "@/app/actions";
+import { Icon } from "@/components/Icon";
 import { JoinForm } from "./JoinForm";
 
 export default async function JoinPage() {
@@ -10,7 +11,9 @@ export default async function JoinPage() {
 
   return (
     <main className="mx-auto flex min-h-dvh max-w-md flex-col items-center justify-center px-6">
-      <div className="mb-3 text-5xl">🔑</div>
+      <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-brand-500 text-white shadow-sm">
+        <Icon name="key" size={32} />
+      </div>
       <h1 className="text-2xl font-black">招待コードを入力</h1>
       <p className="mt-3 mb-8 text-center leading-relaxed text-stone-600">
         同期だけが使えるサービスです。

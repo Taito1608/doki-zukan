@@ -4,6 +4,7 @@ import { attachPhotoUrls, requireProfile } from "@/lib/data";
 import { formatBirthday, messageTarget } from "@/lib/birthday";
 import { deleteMessage } from "@/app/actions";
 import { Avatar } from "@/components/Avatar";
+import { Icon } from "@/components/Icon";
 import type { BirthdayMessage, Profile } from "@/lib/types";
 import { MessageForm } from "./MessageForm";
 
@@ -54,7 +55,10 @@ export default async function BirthdayPage({ params }: { params: Promise<{ id: s
         </div>
         <h1 className="mt-3 text-2xl font-black">{target.display_name}さんへの寄せ書き</h1>
         {hasBirthday && (
-          <p className="mt-1 text-sm opacity-90">🎂 {formatBirthday(target.birth_month, target.birth_day)}</p>
+          <p className="mt-1 flex items-center justify-center gap-1.5 text-sm opacity-90">
+            <Icon name="cake" size={16} />
+            {formatBirthday(target.birth_month, target.birth_day)}
+          </p>
         )}
       </section>
 
@@ -84,7 +88,8 @@ export default async function BirthdayPage({ params }: { params: Promise<{ id: s
 
       {hiddenYear && (
         <p className="rounded-2xl bg-brand-50 p-4 text-center text-sm leading-relaxed text-brand-700 ring-1 ring-brand-200">
-          🎁 今年の寄せ書きは、誕生日当日に公開されます。
+          <Icon name="gift" size={16} className="mr-1 -mt-0.5 align-middle" />
+          今年の寄せ書きは、誕生日当日に公開されます。
           {hiddenCount > 0 && (
             <>
               <br />
