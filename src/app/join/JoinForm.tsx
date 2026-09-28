@@ -2,6 +2,7 @@
 
 import { useActionState, useState } from "react";
 import { joinWithInvite, type ActionState } from "@/app/actions";
+import { Arrow, btnPrimary } from "@/components/ui";
 
 export function JoinForm() {
   const [state, action, pending] = useActionState<ActionState, FormData>(joinWithInvite, {});
@@ -17,15 +18,16 @@ export function JoinForm() {
         autoComplete="off"
         autoCapitalize="characters"
         placeholder="例：DOKI2027"
-        className="w-full rounded-2xl border border-stone-300 bg-white px-4 py-4 text-center text-xl font-bold tracking-widest outline-none focus:border-brand-500"
+        className="w-full border-b-2 border-stone-300 bg-transparent px-4 py-4 text-center text-2xl font-semibold tracking-[0.3em] outline-none focus:border-brand-500"
       />
       {state.error && <p className="text-center text-sm text-red-600">{state.error}</p>}
       <button
         type="submit"
         disabled={pending}
-        className="w-full rounded-2xl bg-brand-500 py-4 text-lg font-bold text-white shadow-sm active:bg-brand-600 disabled:opacity-60"
+        className={`${btnPrimary} text-lg`}
       >
         {pending ? "確認しています…" : "参加する"}
+        <Arrow />
       </button>
     </form>
   );

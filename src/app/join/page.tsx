@@ -11,10 +11,11 @@ export default async function JoinPage() {
 
   return (
     <main className="mx-auto flex min-h-dvh max-w-md flex-col items-center justify-center px-6">
-      <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-brand-500 text-white shadow-sm">
+      <div className="cut mb-5 flex h-16 w-16 items-center justify-center bg-brand-500 text-white">
         <Icon name="key" size={32} />
       </div>
-      <h1 className="text-2xl font-black">招待コードを入力</h1>
+      <p className="text-xs font-semibold tracking-[0.2em] text-brand-600">INVITATION</p>
+      <h1 className="mt-1 text-2xl font-bold">招待コードを入力</h1>
       <p className="mt-3 mb-8 text-center leading-relaxed text-stone-600">
         同期だけが使えるサービスです。
         <br />

@@ -4,6 +4,7 @@ import { useActionState, useState } from "react";
 import { saveMessage, type ActionState } from "@/app/actions";
 import { MESSAGE_MAX_LENGTH } from "@/lib/constants";
 import { Icon } from "@/components/Icon";
+import { Arrow, btnPrimary } from "@/components/ui";
 
 export function MessageForm({
   toUserId,
@@ -18,7 +19,7 @@ export function MessageForm({
   const [body, setBody] = useState(existing ?? "");
 
   return (
-    <form action={action} className="rounded-3xl bg-white p-4 shadow-sm">
+    <form action={action} className="cut bg-panel p-5">
       <input type="hidden" name="to_user_id" value={toUserId} />
       <label htmlFor="body" className="mb-2 block font-bold">
         {existing ? "あなたのメッセージ（書き直せます）" : `${toName}さんへ一言`}
@@ -32,7 +33,7 @@ export function MessageForm({
         value={body}
         onChange={(e) => setBody(e.target.value)}
         placeholder="例：お誕生日おめでとう！研修でまた話そう🎉"
-        className="w-full rounded-xl border border-stone-300 px-4 py-3 outline-none focus:border-brand-500"
+        className="w-full border border-stone-300 bg-white px-4 py-3 outline-none focus:border-brand-500"
       />
       <div className="mt-1 text-right text-xs text-stone-400">
         {body.length}/{MESSAGE_MAX_LENGTH}
@@ -47,9 +48,10 @@ export function MessageForm({
       <button
         type="submit"
         disabled={pending || body.trim().length === 0}
-        className="w-full rounded-2xl bg-brand-500 py-3.5 text-lg font-bold text-white active:bg-brand-600 disabled:opacity-50"
+        className={btnPrimary}
       >
         {pending ? "送信しています…" : existing ? "書き直す" : "寄せ書きに書く"}
+        <Arrow />
       </button>
     </form>
   );

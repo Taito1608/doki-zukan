@@ -15,7 +15,8 @@ export default async function OnboardingPage() {
 
   return (
     <main className="mx-auto max-w-md px-5 pt-10 pb-16">
-      <h1 className="text-2xl font-black">プロフィールを作ろう</h1>
+      <p className="text-xs font-semibold tracking-[0.2em] text-brand-600">WELCOME</p>
+      <h1 className="mt-1 text-2xl font-bold">プロフィールを作ろう</h1>
       <p className="mt-2 mb-8 leading-relaxed text-stone-600">
         名前以外はすべて任意です。あとからいつでも変更できます。
         <br />

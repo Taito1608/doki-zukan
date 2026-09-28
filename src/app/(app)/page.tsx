@@ -6,6 +6,7 @@ import { UPCOMING_DAYS } from "@/lib/constants";
 import { Avatar } from "@/components/Avatar";
 import { InstallHint } from "@/components/InstallHint";
 import { Icon } from "@/components/Icon";
+import { Arrow, SectionHeading, btnPrimary, btnSecondary } from "@/components/ui";
 
 export default async function HomePage() {
   const [{ profile: me }, all] = await Promise.all([requireProfile(), getAllProfiles()]);
@@ -35,52 +36,52 @@ export default async function HomePage() {
   const othersToday = todays.filter((p) => p.id !== me.id);
 
   return (
-    <main className="space-y-6">
+    <main className="space-y-10">
       <header>
-        <p className="text-sm text-stone-500">
-          {today.month}月{today.day}日
+        <p className="text-sm font-semibold tracking-[0.15em] text-brand-600">
+          {today.month}.{String(today.day).padStart(2, "0")}
         </p>
-        <h1 className="text-2xl font-black">こんにちは、{me.display_name}さん</h1>
-        <p className="mt-1 text-sm text-stone-600">登録している同期 {all.length}人</p>
+        <h1 className="mt-1 text-2xl font-bold">こんにちは、{me.display_name}さん</h1>
+        <p className="mt-2 text-sm text-stone-500">
+          登録している同期 <span className="text-base font-semibold text-ink">{all.length}</span> 人
+        </p>
       </header>
 
       <InstallHint />
 
       {myBirthdayToday && (
-        <Link
-          href={`/members/${me.id}/birthday`}
-          className="block rounded-3xl bg-gradient-to-br from-brand-500 to-pink-500 p-5 text-white shadow-md"
-        >
-          <Icon name="party" size={32} />
-          <p className="mt-1 text-xl font-black">お誕生日おめでとうございます！</p>
-          <p className="mt-1 text-sm opacity-90">同期からの寄せ書きを見る →</p>
+        <Link href={`/members/${me.id}/birthday`} className="cut block bg-brand-500 p-5 text-white active:bg-brand-600">
+          <p className="text-[11px] font-semibold tracking-[0.2em] opacity-80">HAPPY BIRTHDAY</p>
+          <p className="mt-1 text-xl font-bold">お誕生日おめでとうございます！</p>
+          <p className="mt-3 flex items-center justify-between text-sm">
+            同期からの寄せ書きを見る
+            <Arrow />
+          </p>
         </Link>
       )}
 
       <section>
-        <h2 className="mb-3 flex items-center gap-2 text-lg font-bold">
-          <Icon name="cake" className="text-brand-500" />
-          今日の誕生日
-        </h2>
+        <SectionHeading en="BIRTHDAY">今日の誕生日</SectionHeading>
         {othersToday.length === 0 ? (
-          <p className="rounded-2xl bg-white p-4 text-sm text-stone-500 shadow-sm">今日が誕生日の同期はいません。</p>
+          <p className="cut bg-panel px-5 py-6 text-center text-sm text-stone-500">今日が誕生日の同期はいません</p>
         ) : (
           <ul className="space-y-3">
             {othersToday.map((p) => (
-              <li key={p.id} className="rounded-2xl bg-white p-4 shadow-sm ring-2 ring-brand-200">
-                <Link href={`/members/${p.id}`} className="flex items-center gap-3">
-                  <Avatar name={p.display_name} url={photo(p.id)} size={56} />
-                  <div>
-                    <p className="text-lg font-bold">{p.display_name}さん</p>
-                    <p className="text-sm text-stone-500">今日が誕生日です</p>
+              <li key={p.id} className="cut border-b-[3px] border-brand-500 bg-panel p-5">
+                <Link href={`/members/${p.id}`} className="flex items-center gap-4">
+                  <Avatar name={p.display_name} url={photo(p.id)} size={64} />
+                  <div className="min-w-0 flex-1">
+                    <p className="truncate text-lg font-bold">{p.display_name}さん</p>
+                    <p className="text-xs text-stone-500">今日が誕生日です</p>
                   </div>
+                  <Arrow className="text-brand-500" />
                 </Link>
-                <Link
-                  href={`/members/${p.id}/birthday`}
-                  className="mt-3 flex items-center justify-center gap-2 rounded-xl bg-brand-500 py-3 font-bold text-white active:bg-brand-600"
-                >
-                  <Icon name="pen" size={18} />
-                  寄せ書きを書く
+                <Link href={`/members/${p.id}/birthday`} className={`${btnPrimary} mt-4`}>
+                  <span className="flex items-center gap-2">
+                    <Icon name="pen" size={18} />
+                    寄せ書きを書く
+                  </span>
+                  <Arrow />
                 </Link>
               </li>
             ))}
@@ -89,23 +90,21 @@ export default async function HomePage() {
       </section>
 
       {upcoming.length > 0 && (
-        <section>
-          <h2 className="mb-3 flex items-center gap-2 text-lg font-bold">
-            <Icon name="calendar" className="text-brand-500" />
-            もうすぐ誕生日
-          </h2>
-          <ul className="divide-y divide-stone-100 rounded-2xl bg-white shadow-sm">
+        <section className="border-t border-stone-200 pt-8">
+          <SectionHeading en="COMING SOON">もうすぐ誕生日</SectionHeading>
+          <ul className="divide-y divide-stone-200 border-y border-stone-200">
             {upcoming.map(({ p, days }) => (
               <li key={p.id}>
-                <Link href={`/members/${p.id}`} className="flex items-center gap-3 p-3">
+                <Link href={`/members/${p.id}`} className="flex items-center gap-3 py-3 active:bg-panel">
                   <Avatar name={p.display_name} url={photo(p.id)} size={44} />
-                  <div className="flex-1">
-                    <p className="font-bold">{p.display_name}</p>
+                  <div className="min-w-0 flex-1">
+                    <p className="truncate font-bold">{p.display_name}</p>
                     <p className="text-xs text-stone-500">{formatBirthday(p.birth_month, p.birth_day)}</p>
                   </div>
-                  <span className="rounded-full bg-brand-50 px-3 py-1 text-xs font-bold text-brand-700">
-                    あと{days}日
+                  <span className="text-sm text-stone-500">
+                    あと<span className="mx-0.5 text-lg font-semibold text-brand-600">{days}</span>日
                   </span>
+                  <Arrow className="ml-1 text-stone-300" />
                 </Link>
               </li>
             ))}
@@ -113,13 +112,12 @@ export default async function HomePage() {
         </section>
       )}
 
-      <section>
-        <h2 className="mb-3 flex items-center gap-2 text-lg font-bold">
-          <Icon name="sparkles" className="text-brand-500" />
+      <section className="border-t border-stone-200 pt-8">
+        <SectionHeading en="IN COMMON" more={matches.length > 0 ? "/members" : undefined}>
           あなたと共通点が多い同期
-        </h2>
+        </SectionHeading>
         {matches.length === 0 ? (
-          <p className="rounded-2xl bg-white p-4 text-sm leading-relaxed text-stone-500 shadow-sm">
+          <p className="cut bg-panel p-5 text-sm leading-relaxed text-stone-600">
             まだ見つかっていません。
             <Link href="/me/edit" className="font-bold text-brand-600 underline">
               プロフィール
@@ -127,22 +125,23 @@ export default async function HomePage() {
             に出身地や趣味を追加すると見つかりやすくなります。
           </p>
         ) : (
-          <ul className="space-y-3">
+          <ul className="space-y-2">
             {matches.map(({ p, points }) => (
               <li key={p.id}>
-                <Link href={`/members/${p.id}`} className="flex items-center gap-3 rounded-2xl bg-white p-3 shadow-sm">
+                <Link href={`/members/${p.id}`} className="cut flex items-center gap-3 bg-panel p-4 active:bg-stone-200">
                   <Avatar name={p.display_name} url={photo(p.id)} size={48} />
                   <div className="min-w-0 flex-1">
                     <p className="font-bold">{p.display_name}</p>
-                    <p className="flex gap-3 overflow-hidden text-xs whitespace-nowrap text-stone-600">
+                    <p className="mt-0.5 flex gap-3 overflow-hidden text-xs whitespace-nowrap text-stone-500">
                       {points.map((pt) => (
                         <span key={pt.label} className="flex items-center gap-1">
-                          <Icon name={pt.icon} size={14} className="text-brand-500" />
+                          <Icon name={pt.icon} size={13} className="text-brand-500" />
                           {pt.label}
                         </span>
                       ))}
                     </p>
                   </div>
+                  <Arrow className="text-brand-500" />
                 </Link>
               </li>
             ))}
@@ -150,12 +149,12 @@ export default async function HomePage() {
         )}
       </section>
 
-      <Link
-        href="/members"
-        className="flex items-center justify-center gap-2 rounded-2xl border-2 border-stone-800 py-4 text-lg font-bold active:bg-stone-100"
-      >
-        <Icon name="users" />
-        同期を見てみる
+      <Link href="/members" className={btnSecondary}>
+        <span className="flex items-center gap-2">
+          <Icon name="users" size={20} />
+          同期を見てみる
+        </span>
+        <Arrow className="text-brand-500" />
       </Link>
     </main>
   );

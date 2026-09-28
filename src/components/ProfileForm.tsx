@@ -13,6 +13,7 @@ import {
 import { cleanHobbies, normalizeHobby } from "@/lib/common";
 import type { Profile } from "@/lib/types";
 import { Avatar } from "./Avatar";
+import { Arrow, btnPrimary } from "./ui";
 
 type Props = {
   userId: string;
@@ -49,7 +50,7 @@ async function resizeImage(file: File, size = 512): Promise<Blob> {
 }
 
 const fieldClass =
-  "w-full rounded-xl border border-stone-300 bg-white px-4 py-3 outline-none focus:border-brand-500";
+  "w-full border border-stone-300 bg-white px-4 py-3 outline-none focus:border-brand-500";
 const labelClass = "mb-1.5 block text-sm font-bold text-stone-700";
 
 export function ProfileForm({ userId, initial, initialPhotoUrl, next, submitLabel }: Props) {
@@ -126,7 +127,7 @@ export function ProfileForm({ userId, initial, initialPhotoUrl, next, submitLabe
             type="button"
             onClick={() => fileRef.current?.click()}
             disabled={uploading}
-            className="rounded-full border border-stone-300 bg-white px-4 py-2 text-sm font-bold active:bg-stone-100 disabled:opacity-60"
+            className="cut bg-panel px-4 py-2 text-sm font-bold active:bg-stone-200 disabled:opacity-60"
           >
             {uploading ? "アップロード中…" : photoPath ? "写真を変更" : "写真を選ぶ（任意）"}
           </button>
@@ -231,7 +232,7 @@ export function ProfileForm({ userId, initial, initialPhotoUrl, next, submitLabe
               key={h}
               type="button"
               onClick={() => toggleHobby(h)}
-              className={`rounded-full border px-3 py-1.5 text-sm ${
+              className={`border px-3 py-1.5 text-sm ${
                 hasHobby(h)
                   ? "border-brand-500 bg-brand-500 font-bold text-white"
                   : "border-stone-300 bg-white text-stone-700"
@@ -245,7 +246,7 @@ export function ProfileForm({ userId, initial, initialPhotoUrl, next, submitLabe
               key={h}
               type="button"
               onClick={() => toggleHobby(h)}
-              className="rounded-full border border-brand-500 bg-brand-500 px-3 py-1.5 text-sm font-bold text-white"
+              className="border border-brand-500 bg-brand-500 px-3 py-1.5 text-sm font-bold text-white"
             >
               {h} ×
             </button>
@@ -268,7 +269,7 @@ export function ProfileForm({ userId, initial, initialPhotoUrl, next, submitLabe
           <button
             type="button"
             onClick={addHobbyFromInput}
-            className="shrink-0 rounded-xl bg-stone-800 px-4 font-bold text-white active:bg-stone-900"
+            className="shrink-0 bg-ink px-4 font-bold text-white active:bg-black"
           >
             追加
           </button>
@@ -314,15 +315,16 @@ export function ProfileForm({ userId, initial, initialPhotoUrl, next, submitLabe
       </div>
 
       {state.error && (
-        <p className="rounded-xl bg-red-50 px-4 py-3 text-sm text-red-700">{state.error}</p>
+        <p className="bg-red-50 px-4 py-3 text-sm text-red-700">{state.error}</p>
       )}
 
       <button
         type="submit"
         disabled={pending || uploading}
-        className="w-full rounded-2xl bg-brand-500 py-4 text-lg font-bold text-white shadow-sm active:bg-brand-600 disabled:opacity-60"
+        className={`${btnPrimary} text-lg`}
       >
         {pending ? "保存しています…" : submitLabel}
+        <Arrow />
       </button>
     </form>
   );

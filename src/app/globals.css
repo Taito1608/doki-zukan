@@ -7,7 +7,11 @@
   --color-brand-500: #f97316;
   --color-brand-600: #ea580c;
   --color-brand-700: #c2410c;
-  --font-sans: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Yu Gothic", system-ui, sans-serif;
+  --color-ink: #1a1a1a;
+  /* 情報をまとめる薄いグレーの面（暖色寄り） */
+  --color-panel: #f4f2ef;
+  /* 英数字は DIN 系の Barlow、日本語は幾何学的なゴシックの Zen Kaku Gothic New */
+  --font-sans: var(--font-barlow), var(--font-zen), "Hiragino Sans", "Hiragino Kaku Gothic ProN", sans-serif;
 }
 
 @layer base {
@@ -16,8 +20,10 @@
   }
 
   body {
-    background: #fafaf9;
-    color: #1c1917;
+    background: #ffffff;
+    color: var(--color-ink);
+    letter-spacing: 0.04em;
+    font-feature-settings: "palt";
   }
 
   /* 入力欄を16px以上にして、iPhoneでの自動ズームを防ぐ */
@@ -26,6 +32,11 @@
   textarea {
     font-size: 16px;
   }
+}
+
+/* 右上の角を斜めに切り落としたパネル */
+@utility cut {
+  clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 0 100%);
 }
 
 /* iPhone のホームバーに被らないようにする */

@@ -35,8 +35,10 @@ export function BottomNav({ myId }: { myId: string }) {
           <li key={it.href} className="flex-1">
             <Link
               href={it.href}
-              className={`flex flex-col items-center gap-1 pt-2 pb-1 text-xs ${
-                it.active ? "font-bold text-brand-600" : "text-stone-500"
+              className={`relative flex flex-col items-center gap-1 pt-2.5 pb-1 text-[11px] tracking-wider ${
+                it.active
+                  ? "font-bold text-brand-600 before:absolute before:inset-x-6 before:top-0 before:h-0.5 before:bg-brand-500"
+                  : "text-stone-500"
               }`}
             >
               <TabContent icon={it.icon} label={it.label} active={it.active} />
