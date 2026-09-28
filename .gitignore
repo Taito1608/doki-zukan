@@ -1,0 +1,21 @@
+# 依存パッケージ
+node_modules
+
+# Next.js のビルド成果物
+.next
+out
+next-env.d.ts
+*.tsbuildinfo
+
+# 環境変数（SupabaseのURL・キー)
+.env
+.env*.local
+
+# Vercel
+.vercel
+
+# macOS
+.DS_Store
+
+# ログ
+npm-debug.log*
