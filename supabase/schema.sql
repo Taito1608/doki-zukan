@@ -27,7 +27,6 @@ create table if not exists public.profiles (
   display_name  text not null check (char_length(display_name) between 1 and 30),
   photo_path    text,
   job_type      text,
-  department    text check (char_length(department) <= 40),
   hometown      text,
   hobbies       text[] not null default '{}',
   birth_month   smallint check (birth_month between 1 and 12),

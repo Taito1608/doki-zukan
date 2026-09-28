@@ -66,7 +66,6 @@ export function ProfileForm({ userId, initial, initialPhotoUrl, next, submitLabe
   const [birthDay, setBirthDay] = useState(initial.birth_day?.toString() ?? "");
   const [hometown, setHometown] = useState(initial.hometown ?? "");
   const [jobType, setJobType] = useState(initial.job_type ?? "");
-  const [department, setDepartment] = useState(initial.department ?? "");
   const [message, setMessage] = useState(initial.message ?? "");
   const fileRef = useRef<HTMLInputElement>(null);
 
@@ -168,7 +167,7 @@ export function ProfileForm({ userId, initial, initialPhotoUrl, next, submitLabe
 
       {/* 誕生日 */}
       <div>
-        <span className={labelClass}>誕生日（任意・年は不要）</span>
+        <span className={labelClass}>誕生日（任意）</span>
         <div className="flex items-center gap-2">
           <select
             name="birth_month"
@@ -295,22 +294,6 @@ export function ProfileForm({ userId, initial, initialPhotoUrl, next, submitLabe
             </option>
           ))}
         </select>
-      </div>
-
-      {/* 配属 */}
-      <div>
-        <label className={labelClass} htmlFor="department">
-          配属先・配属希望（任意）
-        </label>
-        <input
-          id="department"
-          name="department"
-          maxLength={40}
-          value={department}
-          onChange={(e) => setDepartment(e.target.value)}
-          placeholder="例：東京営業部"
-          className={fieldClass}
-        />
       </div>
 
       {/* 一言 */}

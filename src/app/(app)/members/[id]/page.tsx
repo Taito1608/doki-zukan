@@ -28,7 +28,6 @@ export default async function MemberPage({ params }: { params: Promise<{ id: str
     { label: "誕生日", value: birthday },
     { label: "出身地", value: p.hometown },
     { label: "職種", value: p.job_type },
-    { label: "配属", value: p.department },
   ];
 
   return (

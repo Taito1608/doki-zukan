@@ -95,7 +95,6 @@ export async function saveProfile(_prev: ActionState, formData: FormData): Promi
     display_name: displayName,
     photo_path: newPhotoPath,
     job_type: jobType,
-    department: str(formData, "department", 40),
     hometown,
     hobbies,
     birth_month: hasBirthday ? month : null,
