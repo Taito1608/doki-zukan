@@ -3,6 +3,7 @@
 import { useActionState, useState } from "react";
 import { saveMessage, type ActionState } from "@/app/actions";
 import { MESSAGE_MAX_LENGTH } from "@/lib/constants";
+import { Icon } from "@/components/Icon";
 
 export function MessageForm({
   toUserId,
@@ -37,7 +38,12 @@ export function MessageForm({
         {body.length}/{MESSAGE_MAX_LENGTH}
       </div>
       {state.error && <p className="mb-2 text-sm text-red-600">{state.error}</p>}
-      {state.ok && !pending && <p className="mb-2 text-sm font-bold text-green-700">届けました！🎉</p>}
+      {state.ok && !pending && (
+        <p className="mb-2 flex items-center gap-1 text-sm font-bold text-green-700">
+          <Icon name="check" size={16} />
+          届けました！
+        </p>
+      )}
       <button
         type="submit"
         disabled={pending || body.trim().length === 0}

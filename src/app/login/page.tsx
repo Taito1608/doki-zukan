@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
 import { getSession } from "@/lib/data";
+import { Icon } from "@/components/Icon";
 import { LoginButton } from "./LoginButton";
 
 export default async function LoginPage({
@@ -13,7 +14,9 @@ export default async function LoginPage({
 
   return (
     <main className="mx-auto flex min-h-dvh max-w-md flex-col items-center justify-center px-6">
-      <div className="mb-3 text-6xl">📖</div>
+      <div className="mb-4 flex h-20 w-20 items-center justify-center rounded-3xl bg-brand-500 text-white shadow-sm">
+        <Icon name="book" size={44} strokeWidth={1.75} />
+      </div>
       <h1 className="text-3xl font-black tracking-tight">同期図鑑</h1>
       <p className="mt-3 text-center leading-relaxed text-stone-600">
         同期のプロフィールと共通点を知って、

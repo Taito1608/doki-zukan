@@ -4,6 +4,7 @@ import { attachPhotoUrls, requireProfile } from "@/lib/data";
 import { findCommonPoints } from "@/lib/common";
 import { formatBirthday, messageTarget } from "@/lib/birthday";
 import { Avatar } from "@/components/Avatar";
+import { Icon } from "@/components/Icon";
 import type { Profile } from "@/lib/types";
 
 export default async function MemberPage({ params }: { params: Promise<{ id: string }> }) {
@@ -41,11 +42,15 @@ export default async function MemberPage({ params }: { params: Promise<{ id: str
 
       {!isMe && points.length > 0 && (
         <section className="rounded-3xl bg-brand-50 p-5 ring-1 ring-brand-200">
-          <h2 className="mb-2 font-bold text-brand-700">あなたとの共通点</h2>
+          <h2 className="mb-2 flex items-center gap-2 font-bold text-brand-700">
+            <Icon name="sparkles" size={18} />
+            あなたとの共通点
+          </h2>
           <ul className="space-y-1.5">
             {points.map((pt) => (
-              <li key={pt.label} className="text-base">
-                {pt.icon} {pt.label}
+              <li key={pt.label} className="flex items-center gap-2 text-base">
+                <Icon name={pt.icon} size={18} className="text-brand-500" />
+                {pt.label}
               </li>
             ))}
           </ul>
@@ -56,13 +61,14 @@ export default async function MemberPage({ params }: { params: Promise<{ id: str
       {target?.canWrite && !isMe && (
         <Link
           href={`/members/${p.id}/birthday`}
-          className="block rounded-2xl bg-brand-500 py-4 text-center text-lg font-bold text-white shadow-sm active:bg-brand-600"
+          className="flex items-center justify-center gap-2 rounded-2xl bg-brand-500 py-4 text-lg font-bold text-white shadow-sm active:bg-brand-600"
         >
+          <Icon name="cake" />
           {target.diff === 0
-            ? "🎂 今日が誕生日！寄せ書きを書く"
+            ? "今日が誕生日！寄せ書きを書く"
             : target.diff > 0
-              ? `🎂 誕生日まであと${target.diff}日｜寄せ書きを書く`
-              : "🎂 誕生日の寄せ書きを書く"}
+              ? `誕生日まであと${target.diff}日｜寄せ書きを書く`
+              : "誕生日の寄せ書きを書く"}
         </Link>
       )}
 
@@ -106,9 +112,10 @@ export default async function MemberPage({ params }: { params: Promise<{ id: str
           {birthday && (
             <Link
               href={`/members/${p.id}/birthday`}
-              className="block rounded-2xl border-2 border-stone-800 py-4 text-center font-bold active:bg-stone-100"
+              className="flex items-center justify-center gap-2 rounded-2xl border-2 border-stone-800 py-4 font-bold active:bg-stone-100"
             >
-              🎁 自分宛ての寄せ書きを見る
+              <Icon name="gift" />
+              自分宛ての寄せ書きを見る
             </Link>
           )}
         </div>
