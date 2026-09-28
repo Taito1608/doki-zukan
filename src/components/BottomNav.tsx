@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import Link, { useLinkStatus } from "next/link";
 import { usePathname } from "next/navigation";
 import { Icon, type IconName } from "./Icon";
 
@@ -39,12 +39,22 @@ export function BottomNav({ myId }: { myId: string }) {
                 it.active ? "font-bold text-brand-600" : "text-stone-500"
               }`}
             >
-              <Icon name={it.icon} size={24} strokeWidth={it.active ? 2.25 : 1.75} />
-              {it.label}
+              <TabContent icon={it.icon} label={it.label} active={it.active} />
             </Link>
           </li>
         ))}
       </ul>
     </nav>
+  );
+}
+
+/** タップ直後から読み込みが終わるまで、そのタブのアイコンを点滅させる */
+function TabContent({ icon, label, active }: { icon: IconName; label: string; active: boolean }) {
+  const { pending } = useLinkStatus();
+  return (
+    <>
+      <Icon name={icon} size={24} strokeWidth={active ? 2.25 : 1.75} className={pending ? "animate-pulse" : ""} />
+      {label}
+    </>
   );
 }

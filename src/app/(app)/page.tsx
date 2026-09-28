@@ -8,8 +8,7 @@ import { InstallHint } from "@/components/InstallHint";
 import { Icon } from "@/components/Icon";
 
 export default async function HomePage() {
-  const { profile: me } = await requireProfile();
-  const all = await getAllProfiles();
+  const [{ profile: me }, all] = await Promise.all([requireProfile(), getAllProfiles()]);
   const today = todayJST();
 
   const withDays = all

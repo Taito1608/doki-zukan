@@ -11,9 +11,11 @@ function includes(hay: string | null | undefined, needle: string) {
 }
 
 export default async function MembersPage({ searchParams }: { searchParams: Promise<Search> }) {
-  const { profile: me } = await requireProfile();
-  const { q = "", hometown = "", job = "", hobby = "" } = await searchParams;
-  const all = await getAllProfiles();
+  const [{ profile: me }, { q = "", hometown = "", job = "", hobby = "" }, all] = await Promise.all([
+    requireProfile(),
+    searchParams,
+    getAllProfiles(),
+  ]);
 
   const needle = q.normalize("NFKC").trim().toLowerCase();
   const hobbyNeedle = hobby.normalize("NFKC").trim().toLowerCase();

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { attachPhotoUrls, requireProfile } from "@/lib/data";
+import { createClient } from "@/lib/supabase/server";
 import { formatBirthday, messageTarget } from "@/lib/birthday";
 import { deleteMessage } from "@/app/actions";
 import { Avatar } from "@/components/Avatar";
@@ -10,21 +11,23 @@ import { MessageForm } from "./MessageForm";
 
 export default async function BirthdayPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const { supabase, profile: me, member } = await requireProfile();
-
-  const { data: target } = await supabase.from("profiles").select("*").eq("id", id).maybeSingle<Profile>();
+  const supabase = await createClient();
+  const [{ profile: me, member }, { data: target }, { data: msgData }] = await Promise.all([
+    requireProfile(),
+    supabase.from("profiles").select("*").eq("id", id).maybeSingle<Profile>(),
+    supabase
+      .from("birthday_messages")
+      .select("*")
+      .eq("to_user_id", id)
+      .order("year", { ascending: false })
+      .order("created_at", { ascending: true }),
+  ]);
   if (!target) notFound();
 
   const isMe = target.id === me.id;
   const hasBirthday = target.birth_month != null && target.birth_day != null;
   const t = hasBirthday ? messageTarget(target.birth_month!, target.birth_day!) : null;
 
-  const { data: msgData } = await supabase
-    .from("birthday_messages")
-    .select("*")
-    .eq("to_user_id", target.id)
-    .order("year", { ascending: false })
-    .order("created_at", { ascending: true });
   const messages = (msgData ?? []) as BirthdayMessage[];
 
   // 書いた人の名前と写真

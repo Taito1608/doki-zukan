@@ -8,10 +8,11 @@ const SIGNED_URL_TTL = 60 * 60; // 1時間
 /** ログイン中のユーザー・メンバー情報・プロフィールをまとめて取得（1リクエスト内でキャッシュ） */
 export const getSession = cache(async () => {
   const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-  if (!user) return { supabase, user: null, member: null, profile: null };
+  // middleware と同じく getClaims で検証し、認証サーバーへの通信を減らす
+  const { data } = await supabase.auth.getClaims();
+  const claims = data?.claims;
+  if (!claims) return { supabase, user: null, member: null, profile: null };
+  const user = { id: claims.sub, user_metadata: (claims.user_metadata ?? {}) as Record<string, unknown> };
 
   const [{ data: member }, { data: profile }] = await Promise.all([
     supabase.from("members").select("*").eq("id", user.id).maybeSingle<Member>(),
