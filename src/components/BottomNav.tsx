@@ -4,21 +4,27 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Icon, type IconName } from "./Icon";
 
+/** path がそのページかその配下か（"/me" が "/members" に一致しないよう区切りで判定する） */
+function isUnder(pathname: string, path: string) {
+  return pathname === path || pathname.startsWith(`${path}/`);
+}
+
 export function BottomNav({ myId }: { myId: string }) {
   const pathname = usePathname();
+  const isMine = isUnder(pathname, `/members/${myId}`) || isUnder(pathname, "/me");
   const items: { href: string; label: string; icon: IconName; active: boolean }[] = [
     { href: "/", label: "ホーム", icon: "home", active: pathname === "/" },
     {
       href: "/members",
       label: "同期",
       icon: "users",
-      active: pathname.startsWith("/members") && !pathname.startsWith(`/members/${myId}`),
+      active: isUnder(pathname, "/members") && !isMine,
     },
     {
       href: `/members/${myId}`,
       label: "マイページ",
       icon: "user",
-      active: pathname.startsWith(`/members/${myId}`) || pathname.startsWith("/me"),
+      active: isMine,
     },
   ];
 
