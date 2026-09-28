@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { attachPhotoUrls, requireProfile } from "@/lib/data";
+import { createClient } from "@/lib/supabase/server";
 import { findCommonPoints } from "@/lib/common";
 import { formatBirthday, messageTarget } from "@/lib/birthday";
 import { Avatar } from "@/components/Avatar";
@@ -9,9 +10,11 @@ import type { Profile } from "@/lib/types";
 
 export default async function MemberPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const { supabase, profile: me } = await requireProfile();
-
-  const { data } = await supabase.from("profiles").select("*").eq("id", id).maybeSingle<Profile>();
+  const supabase = await createClient();
+  const [{ profile: me }, { data }] = await Promise.all([
+    requireProfile(),
+    supabase.from("profiles").select("*").eq("id", id).maybeSingle<Profile>(),
+  ]);
   if (!data) notFound();
   const [p] = await attachPhotoUrls([data]);
 
