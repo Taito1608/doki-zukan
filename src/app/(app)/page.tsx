@@ -61,7 +61,7 @@ export default async function HomePage() {
       )}
 
       <section>
-        <SectionHeading en="BIRTHDAY">今日の誕生日</SectionHeading>
+        <SectionHeading en="BIRTHDAY">今日が誕生日</SectionHeading>
         {othersToday.length === 0 ? (
           <p className="cut bg-panel px-5 py-6 text-center text-sm text-stone-500">今日が誕生日の同期はいません</p>
         ) : (

@@ -32,7 +32,7 @@ export function MessageForm({
         maxLength={MESSAGE_MAX_LENGTH}
         value={body}
         onChange={(e) => setBody(e.target.value)}
-        placeholder="例：お誕生日おめでとう！研修でまた話そう🎉"
+        placeholder="例：お誕生日おめでとう！また話そう🎉"
         className="w-full border border-stone-300 bg-white px-4 py-3 outline-none focus:border-brand-500"
       />
       <div className="mt-1 text-right text-xs text-stone-400">
