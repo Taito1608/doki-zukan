@@ -38,7 +38,7 @@ export default async function MembersPage({ searchParams }: { searchParams: Prom
     return true;
   });
 
-  const withPhotos = await attachPhotoUrls(filtered);
+  const withPhotos = await attachPhotoUrls(filtered, { size: "thumb" });
   const isFiltered = !!(q || hometown || job || hobby);
 
   const fieldClass =

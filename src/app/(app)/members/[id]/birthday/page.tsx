@@ -36,7 +36,7 @@ export default async function BirthdayPage({ params }: { params: Promise<{ id: s
   const { data: authorData } = authorIds.length
     ? await supabase.from("profiles").select("*").in("id", authorIds)
     : { data: [] as Profile[] };
-  const authors = await attachPhotoUrls([target, ...((authorData ?? []) as Profile[])]);
+  const authors = await attachPhotoUrls([target, ...((authorData ?? []) as Profile[])], { size: "thumb" });
   const authorOf = (uid: string) => authors.find((a) => a.id === uid);
   const targetWithPhoto = authorOf(target.id)!;
 

@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { cleanHobbies } from "@/lib/common";
 import { messageTarget } from "@/lib/birthday";
+import { thumbPathOf } from "@/lib/photo";
 import { JOB_TYPES, MESSAGE_MAX_LENGTH, NAME_ROMAN_PATTERN, PREFECTURES } from "@/lib/constants";
 import type { Profile } from "@/lib/types";
 
@@ -115,7 +116,7 @@ export async function saveProfile(_prev: ActionState, formData: FormData): Promi
 
   // 差し替え・削除された古い写真を消す
   if (before?.photo_path && before.photo_path !== newPhotoPath) {
-    await supabase.storage.from("avatars").remove([before.photo_path]);
+    await supabase.storage.from("avatars").remove([before.photo_path, thumbPathOf(before.photo_path)]);
   }
 
   revalidatePath("/", "layout");

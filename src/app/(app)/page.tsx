@@ -29,7 +29,9 @@ export default async function HomePage() {
     .sort((a, b) => b.points.length - a.points.length)
     .slice(0, 3);
 
-  const shown = await attachPhotoUrls([...todays, ...upcoming.map((x) => x.p), ...matches.map((x) => x.p)]);
+  const shown = await attachPhotoUrls([...todays, ...upcoming.map((x) => x.p), ...matches.map((x) => x.p)], {
+    size: "thumb",
+  });
   const photo = (id: string) => shown.find((s) => s.id === id)?.photo_url ?? null;
 
   const myBirthdayToday = todays.some((p) => p.id === me.id);

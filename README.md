@@ -73,7 +73,9 @@ Supabase の **Authentication → URL Configuration** の **Redirect URLs** に�
 1. このフォルダを GitHub のリポジトリに push します。
 2. https://vercel.com で **Add New → Project** からそのリポジトリを選びます。
 3. **Environment Variables** に `NEXT_PUBLIC_SUPABASE_URL`、`NEXT_PUBLIC_SUPABASE_ANON_KEY`、`NEXT_PUBLIC_GOOGLE_CLIENT_ID` を設定し、Deploy します。
-4. Supabase の **Authentication → URL Configuration** を次のとおり設定します。
+4. （任意）**Environment Variables** に `CRON_SECRET`（ランダムな長い文字列）を設定すると、
+   Supabase の停止を防ぐ定期アクセス（`/api/cron/keepalive`、`vercel.json` で1日1回）を Vercel Cron 以外から呼べなくなります。
+5. Supabase の **Authentication → URL Configuration** を次のとおり設定します。
    - **Site URL**：`https://<あなたのアプリ>.vercel.app`
    - **Redirect URLs**：`https://<あなたのアプリ>.vercel.app/**` を追加
 

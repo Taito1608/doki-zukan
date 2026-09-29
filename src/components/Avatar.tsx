@@ -13,7 +13,14 @@ export function Avatar({ name, url, size = 56 }: { name: string; url: string | n
   if (url) {
     // 署名付きURLは毎回変わるため next/image ではなく img を使う
     // eslint-disable-next-line @next/next/no-img-element
-    return <img src={url} alt={name} style={style} className="shrink-0 rounded-full object-cover" />;
+    return <img
+        src={url}
+        alt={name}
+        style={style}
+        loading="lazy"
+        decoding="async"
+        className="shrink-0 rounded-full object-cover"
+      />;
   }
   return (
     <div
