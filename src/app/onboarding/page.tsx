@@ -18,7 +18,7 @@ export default async function OnboardingPage() {
       <p className="text-xs font-semibold tracking-[0.2em] text-brand-600">WELCOME</p>
       <h1 className="mt-1 text-2xl font-bold">プロフィールを作ろう</h1>
       <p className="mt-2 mb-8 leading-relaxed text-stone-600">
-        名前以外はすべて任意です。あとからいつでも変更できます。
+        名前と読み仮名以外はすべて任意です。あとからいつでも変更できます。
         <br />
         趣味や出身地を入れると、同期との共通点が見つかります。
       </p>

@@ -170,11 +170,12 @@ export function ProfileForm({ userId, initial, initialPhotoUrl, next, submitLabe
       {/* 読み仮名（ローマ字） */}
       <div>
         <label className={labelClass} htmlFor="name_roman">
-          読み仮名（ローマ字・任意）
+          読み仮名（ローマ字） <span className="text-brand-600">必須</span>
         </label>
         <input
           id="name_roman"
           name="name_roman"
+          required
           maxLength={40}
           value={nameRoman}
           onChange={(e) => setNameRoman(e.target.value)}

@@ -51,7 +51,8 @@ export async function saveProfile(_prev: ActionState, formData: FormData): Promi
 
   // 全角英字やスペースの重なりを整えてから、ローマ字かどうかを確かめる
   const nameRoman = (str(formData, "name_roman", 80) ?? "").normalize("NFKC").replace(/\s+/g, " ").trim() || null;
-  if (nameRoman && !NAME_ROMAN_PATTERN.test(nameRoman)) {
+  if (!nameRoman) return { error: "読み仮名（ローマ字）を入力してください。" };
+  if (!NAME_ROMAN_PATTERN.test(nameRoman)) {
     return { error: "読み仮名は、ローマ字（半角英字）40文字以内で入力してください。" };
   }
 
