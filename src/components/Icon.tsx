@@ -153,6 +153,13 @@ const PATHS = {
       <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
     </>
   ),
+  monitor: (
+    <>
+      <rect width="20" height="14" x="2" y="3" rx="2" />
+      <path d="M8 21h8" />
+      <path d="M12 17v4" />
+    </>
+  ),
   check: <path d="M20 6 9 17l-5-5" />,
 };
 
