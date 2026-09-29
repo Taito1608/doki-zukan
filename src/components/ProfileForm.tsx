@@ -63,6 +63,7 @@ export function ProfileForm({ userId, initial, initialPhotoUrl, next, submitLabe
   const [hobbyInput, setHobbyInput] = useState("");
   // 送信エラー時にReactがフォームをリセットしても入力が消えないよう、すべて制御コンポーネントにする
   const [name, setName] = useState(initial.display_name ?? "");
+  const [nameRoman, setNameRoman] = useState(initial.name_roman ?? "");
   const [birthMonth, setBirthMonth] = useState(initial.birth_month?.toString() ?? "");
   const [birthDay, setBirthDay] = useState(initial.birth_day?.toString() ?? "");
   const [hometown, setHometown] = useState(initial.hometown ?? "");
@@ -164,6 +165,28 @@ export function ProfileForm({ userId, initial, initialPhotoUrl, next, submitLabe
           className={fieldClass}
         />
         <p className="mt-1 text-xs text-stone-500">同期が分かる名前にしてください（フルネーム推奨）</p>
+      </div>
+
+      {/* 読み仮名（ローマ字） */}
+      <div>
+        <label className={labelClass} htmlFor="name_roman">
+          読み仮名（ローマ字・任意）
+        </label>
+        <input
+          id="name_roman"
+          name="name_roman"
+          maxLength={40}
+          value={nameRoman}
+          onChange={(e) => setNameRoman(e.target.value)}
+          placeholder="例：Taro Yamada"
+          autoComplete="off"
+          autoCapitalize="words"
+          autoCorrect="off"
+          spellCheck={false}
+          lang="en"
+          className={fieldClass}
+        />
+        <p className="mt-1 text-xs text-stone-500">名前の読み方を、半角のローマ字で入力してください</p>
       </div>
 
       {/* 誕生日 */}

@@ -10,6 +10,9 @@ export const PREFECTURES = [
   "海外",
 ] as const;
 
+/** 名前の読み（ローマ字）として使える文字：半角英字・スペース・ピリオド・アポストロフィ・ハイフン */
+export const NAME_ROMAN_PATTERN = /^[A-Za-z][A-Za-z .'-]{0,39}$/;
+
 export const JOB_TYPES = ["ビジネス総合職", "ソフトウェアエンジニア職", "リサーチエンジニア職", "その他"] as const;
 
 /** タップで追加できる趣味タグの候補 */

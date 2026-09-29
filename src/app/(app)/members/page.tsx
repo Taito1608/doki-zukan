@@ -29,6 +29,7 @@ export default async function MembersPage({ searchParams }: { searchParams: Prom
     if (needle) {
       const hit =
         includes(p.display_name, needle) ||
+        includes(p.name_roman, needle) ||
         includes(p.hometown, needle) ||
         includes(p.message, needle) ||
         p.hobbies.some((h) => includes(h, needle));
@@ -115,6 +116,9 @@ export default async function MembersPage({ searchParams }: { searchParams: Prom
               >
                 <Avatar name={p.display_name} url={p.photo_url} size={72} />
                 <p className="mt-3 line-clamp-2 font-bold">{p.display_name}</p>
+                {p.name_roman && (
+                  <p className="line-clamp-1 text-[11px] tracking-[0.08em] text-stone-500">{p.name_roman}</p>
+                )}
                 <p className="mt-0.5 text-xs text-stone-500">{p.hometown ?? " "}</p>
                 {isMe ? (
                   <span className="mt-2 text-[11px] font-semibold tracking-wider text-stone-500">あなた</span>

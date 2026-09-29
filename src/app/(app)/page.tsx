@@ -72,6 +72,7 @@ export default async function HomePage() {
                   <Avatar name={p.display_name} url={photo(p.id)} size={64} />
                   <div className="min-w-0 flex-1">
                     <p className="truncate text-lg font-bold">{p.display_name}さん</p>
+                    {p.name_roman && <p className="truncate text-xs tracking-[0.08em] text-stone-500">{p.name_roman}</p>}
                     <p className="text-xs text-stone-500">今日が誕生日です</p>
                   </div>
                   <Arrow className="text-brand-500" />

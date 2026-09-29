@@ -25,6 +25,8 @@ create table if not exists public.members (
 create table if not exists public.profiles (
   id            uuid primary key references public.members(id) on delete cascade,
   display_name  text not null check (char_length(display_name) between 1 and 30),
+  -- 名前の読み（ローマ字）。例：Taro Yamada
+  name_roman    text check (name_roman ~ '^[A-Za-z][A-Za-z .''-]{0,39}$'),
   photo_path    text,
   job_type      text,
   hometown      text,

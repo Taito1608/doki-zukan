@@ -1,6 +1,8 @@
 export type Profile = {
   id: string;
   display_name: string;
+  /** 名前の読み（ローマ字） */
+  name_roman: string | null;
   photo_path: string | null;
   job_type: string | null;
   hometown: string | null;
