@@ -37,6 +37,7 @@ export default async function MemberPage({ params }: { params: Promise<{ id: str
         <Avatar name={p.display_name} url={p.photo_url} size={120} />
         <p className="mt-5 text-[11px] font-semibold tracking-[0.2em] text-brand-600">{isMe ? "MY PROFILE" : "PROFILE"}</p>
         <h1 className="mt-1 text-2xl font-bold">{p.display_name}</h1>
+        {p.name_roman && <p className="mt-1 text-sm tracking-[0.12em] text-stone-500">{p.name_roman}</p>}
         {p.message && (
           <p className="cut mt-5 w-full bg-panel px-5 py-4 text-left text-sm leading-relaxed text-stone-700">
             {p.message}

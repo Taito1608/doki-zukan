@@ -5,7 +5,7 @@ import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { cleanHobbies } from "@/lib/common";
 import { messageTarget } from "@/lib/birthday";
-import { JOB_TYPES, MESSAGE_MAX_LENGTH, PREFECTURES } from "@/lib/constants";
+import { JOB_TYPES, MESSAGE_MAX_LENGTH, NAME_ROMAN_PATTERN, PREFECTURES } from "@/lib/constants";
 import type { Profile } from "@/lib/types";
 
 export type ActionState = { error?: string; ok?: boolean };
@@ -48,6 +48,13 @@ export async function saveProfile(_prev: ActionState, formData: FormData): Promi
 
   const displayName = str(formData, "display_name", 30);
   if (!displayName) return { error: "名前を入力してください。" };
+
+  // 全角英字やスペースの重なりを整えてから、ローマ字かどうかを確かめる
+  const nameRoman = (str(formData, "name_roman", 80) ?? "").normalize("NFKC").replace(/\s+/g, " ").trim() || null;
+  if (!nameRoman) return { error: "読み仮名（ローマ字）を入力してください。" };
+  if (!NAME_ROMAN_PATTERN.test(nameRoman)) {
+    return { error: "読み仮名は、ローマ字（半角英字）40文字以内で入力してください。" };
+  }
 
   const jobType = str(formData, "job_type");
   const hometown = str(formData, "hometown");
@@ -93,6 +100,7 @@ export async function saveProfile(_prev: ActionState, formData: FormData): Promi
   const { error } = await supabase.from("profiles").upsert({
     id: userId,
     display_name: displayName,
+    name_roman: nameRoman,
     photo_path: newPhotoPath,
     job_type: jobType,
     hometown,
