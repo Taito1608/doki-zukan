@@ -11,6 +11,7 @@ import {
   PREFECTURES,
 } from "@/lib/constants";
 import { cleanHobbies, normalizeHobby } from "@/lib/common";
+import { PHOTO_CACHE_SECONDS, PHOTO_SIZE, THUMB_SIZE, thumbPathOf } from "@/lib/photo";
 import type { Profile } from "@/lib/types";
 import { Avatar } from "./Avatar";
 import { Arrow, btnPrimary } from "./ui";
@@ -23,8 +24,8 @@ type Props = {
   submitLabel: string;
 };
 
-/** 写真を正方形・最大512pxのJPEGに縮小する（通信量と保存容量の節約） */
-async function resizeImage(file: File, size = 512): Promise<Blob> {
+/** 写真を正方形・最大 size px のJPEGに縮小する（通信量と保存容量の節約） */
+async function resizeImage(file: File, size: number): Promise<Blob> {
   const url = URL.createObjectURL(file);
   try {
     const img = await new Promise<HTMLImageElement>((resolve, reject) => {
@@ -77,13 +78,16 @@ export function ProfileForm({ userId, initial, initialPhotoUrl, next, submitLabe
     setUploading(true);
     setPhotoError(null);
     try {
-      const blob = await resizeImage(file);
+      const [blob, thumb] = await Promise.all([resizeImage(file, PHOTO_SIZE), resizeImage(file, THUMB_SIZE)]);
       const path = `${userId}/${crypto.randomUUID()}.jpg`;
       const supabase = createClient();
-      const { error } = await supabase.storage
-        .from("avatars")
-        .upload(path, blob, { contentType: "image/jpeg", upsert: false });
-      if (error) throw error;
+      // ファイル名は毎回変わるので、ブラウザに長くキャッシュさせて通信量を減らす
+      const options = { contentType: "image/jpeg", upsert: false, cacheControl: String(PHOTO_CACHE_SECONDS) };
+      const [full, small] = await Promise.all([
+        supabase.storage.from("avatars").upload(path, blob, options),
+        supabase.storage.from("avatars").upload(thumbPathOf(path), thumb, options),
+      ]);
+      if (full.error || small.error) throw full.error ?? small.error;
       setPhotoPath(path);
       setPhotoUrl(URL.createObjectURL(blob));
     } catch {
