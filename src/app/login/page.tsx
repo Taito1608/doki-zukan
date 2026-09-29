@@ -20,9 +20,9 @@ export default async function LoginPage({
       <p className="text-xs font-semibold tracking-[0.3em] text-brand-600">DOKI ZUKAN</p>
       <h1 className="mt-1 text-3xl font-bold">同期図鑑</h1>
       <p className="mt-3 text-center leading-relaxed text-stone-600">
-        同期のプロフィールと共通点を知って、
+        共通点から話しかけて、
         <br />
-        誕生日を寄せ書きでお祝いしよう。
+        同期ともっと仲良くなろう。
       </p>
 
       <div className="mt-10 w-full">
