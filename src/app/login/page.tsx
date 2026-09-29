@@ -1,6 +1,8 @@
 import { redirect } from "next/navigation";
 import { getSession } from "@/lib/data";
+import Link from "next/link";
 import { Icon } from "@/components/Icon";
+import { Arrow } from "@/components/ui";
 import { LoginButton } from "./LoginButton";
 
 export default async function LoginPage({
@@ -38,6 +40,11 @@ export default async function LoginPage({
       <p className="mt-8 text-center text-xs leading-relaxed text-stone-500">
         閲覧できるのは、招待コードで登録した同期だけです。
       </p>
+
+      <Link href="/about" className="mt-6 flex items-center gap-1.5 text-sm font-medium">
+        はじめての方へ（使い方・注意事項）
+        <Arrow className="text-brand-500" />
+      </Link>
     </main>
   );
 }
