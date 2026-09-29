@@ -17,7 +17,6 @@ export function JoinForm() {
         onChange={(e) => setCode(e.target.value)}
         autoComplete="off"
         autoCapitalize="characters"
-        placeholder="例：DOKI2027"
         className="w-full border-b-2 border-stone-300 bg-transparent px-4 py-4 text-center text-2xl font-semibold tracking-[0.3em] outline-none focus:border-brand-500"
       />
       {state.error && <p className="text-center text-sm text-red-600">{state.error}</p>}
