@@ -1,7 +1,8 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
-const PUBLIC_PATHS = ["/login", "/auth"];
+// ログインしていなくても開けるページ（紹介ページを含む）
+const PUBLIC_PATHS = ["/login", "/auth", "/about"];
 
 /** セッションを更新し、未ログインならログイン画面へ送る */
 export async function updateSession(request: NextRequest) {
