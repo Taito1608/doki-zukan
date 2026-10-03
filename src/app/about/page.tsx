@@ -37,6 +37,39 @@ const STEPS = [
   { title: "ホーム画面に追加", body: "アプリのようにすぐ開けるようになります（下の手順を参照）。パソコンはブックマークでも大丈夫です。" },
 ];
 
+const NOTIFICATIONS = [
+  {
+    when: "前日 19時ごろ",
+    title: "明日は〇〇さんの誕生日です！",
+    body: "同期の誕生日の前日に、みんなにお知らせします。",
+  },
+  {
+    when: "当日 8時ごろ",
+    title: "今日は〇〇さんの誕生日です！",
+    body: "まだ寄せ書きを書いていない人にだけお知らせします。",
+  },
+  {
+    when: "当日 8時ごろ",
+    title: "お誕生日おめでとうございます！",
+    body: "誕生日の本人に、届いた寄せ書きの件数をお知らせします。",
+  },
+];
+
+const NOTIFICATION_TROUBLE = [
+  {
+    device: "iPhone",
+    fix: "「設定」アプリ →「通知」→「同期図鑑」で「通知を許可」をオンにします。ホーム画面に追加していない場合は、先に追加してください。",
+  },
+  {
+    device: "Android",
+    fix: "Chrome のアドレスバー左のアイコン →「権限」→「通知」を許可します。または「設定」→「アプリ」→「Chrome」→「通知」をオンにします。",
+  },
+  {
+    device: "PC",
+    fix: "アドレスバー左の鍵（または設定）のアイコン →「通知」を「許可」にします。あわせてパソコン本体の通知設定も確認してください。",
+  },
+];
+
 const PRIVACY: { icon: IconName; title: string; body: React.ReactNode }[] = [
   {
     icon: "lock",
@@ -94,7 +127,7 @@ const FAQ = [
   { q: "お金はかかりますか？", a: "無料です。" },
   {
     q: "誕生日の通知は届きますか？",
-    a: "届きます。「マイページ → プロフィールを編集 → 通知」でオンにすると、誕生日の前日19時ごろと、当日8時ごろ（まだ寄せ書きを書いていない場合）にお知らせします。iPhone はホーム画面に追加したアプリから設定してください。通知には同期の名前が表示されます。",
+    a: "届きます。通知をオンにすると、誕生日の前日19時ごろと、当日8時ごろ（まだ寄せ書きを書いていない場合）にお知らせします。iPhone・Android・PC それぞれの設定方法は、このページの「誕生日の通知」を見てください。",
   },
   { q: "パソコンでも使えますか？", a: "使えます。パソコンのブラウザで同じURLを開き、同じ Google アカウントでログインしてください（「すぐ開けるようにする」の PC の手順も参照）。" },
   { q: "名前や写真を変えたいです", a: "「マイページ → プロフィールを編集」からいつでも変更できます。" },
@@ -220,6 +253,95 @@ export default function AboutPage() {
           </div>
           <p className="mt-4 text-sm leading-relaxed text-stone-600">
             ※ LINE などのアプリの中で開くと、Google のログインができないことがあります。右上のメニューから「ブラウザで開く」を選んでください。
+          </p>
+        </section>
+
+        {/* 誕生日の通知 */}
+        <section id="notification" className="scroll-mt-6 border-t border-stone-200 pt-10">
+          <SectionHeading en="NOTIFICATION">誕生日の通知</SectionHeading>
+          <p className="leading-relaxed text-stone-700">
+            通知をオンにすると、同期の誕生日をお知らせします。前日のうちに寄せ書きを書いておくと、当日の朝に本人に届きます。
+          </p>
+          <ul className="mt-5 divide-y divide-stone-200 border-y border-stone-200">
+            {NOTIFICATIONS.map((n) => (
+              <li key={n.title} className="flex gap-4 py-3.5 text-sm leading-relaxed">
+                <span className="w-24 shrink-0 font-bold text-brand-600">{n.when}</span>
+                <span>
+                  <b>{n.title}</b>
+                  <span className="block text-stone-600">{n.body}</span>
+                </span>
+              </li>
+            ))}
+          </ul>
+
+          <h3 className="mt-10 mb-4 text-lg font-bold">通知をオンにする</h3>
+          <div className="grid gap-3 sm:grid-cols-2">
+            <Panel className="border-b-[3px] border-brand-500">
+              <p className="text-[11px] font-semibold tracking-[0.2em] text-brand-600">iPhone</p>
+              <ol className="mt-3 space-y-3 text-sm leading-relaxed">
+                <li>
+                  1. 先に<b>ホーム画面に追加</b>します（上の「すぐ開けるようにする」を参照）
+                </li>
+                <li>
+                  2. ホーム画面の<b>同期図鑑のアイコン</b>から開きます
+                </li>
+                <li>
+                  3. ホームの「<b>通知をオンにする</b>」をタップします
+                </li>
+                <li>
+                  4. 通知の確認が出たら「<b>許可</b>」をタップします
+                </li>
+              </ol>
+              <p className="mt-3 text-xs leading-relaxed text-stone-500">
+                iOS 16.4 以降が必要です。Safari のタブのままでは設定できません。
+              </p>
+            </Panel>
+            <Panel className="border-b-[3px] border-brand-500">
+              <p className="text-[11px] font-semibold tracking-[0.2em] text-brand-600">Android</p>
+              <ol className="mt-3 space-y-3 text-sm leading-relaxed">
+                <li>
+                  1. <b>Chrome</b> でアプリを開きます（ホーム画面に追加したアイコンからでも大丈夫です）
+                </li>
+                <li>
+                  2. ホームの「<b>通知をオンにする</b>」をタップします
+                </li>
+                <li>
+                  3. 通知の確認が出たら「<b>許可</b>」をタップします
+                </li>
+              </ol>
+            </Panel>
+            <Panel className="border-b-[3px] border-brand-500 sm:col-span-2">
+              <p className="text-[11px] font-semibold tracking-[0.2em] text-brand-600">PC</p>
+              <ol className="mt-3 space-y-3 text-sm leading-relaxed">
+                <li>
+                  1. <b>Chrome・Edge・Firefox・Safari（Mac）</b>でアプリを開きます
+                </li>
+                <li>
+                  2. ホームの「<b>通知をオンにする</b>」を押します
+                </li>
+                <li>
+                  3. ブラウザに通知の確認が出たら「<b>許可</b>」を押します
+                </li>
+              </ol>
+              <p className="mt-3 text-xs leading-relaxed text-stone-500">
+                ブラウザを閉じていると届かないことがあります。Chrome・Edge は、アプリとしてインストールしておくと届きやすくなります。
+                パソコン本体の通知がオフだと表示されないので、Mac は「システム設定 → 通知」、Windows は「設定 → システム → 通知」でブラウザの通知を許可してください。
+              </p>
+            </Panel>
+          </div>
+
+          <h3 className="mt-10 mb-4 text-lg font-bold">うまくいかないとき</h3>
+          <ul className="divide-y divide-stone-200 border-y border-stone-200 text-sm leading-relaxed">
+            {NOTIFICATION_TROUBLE.map((t) => (
+              <li key={t.device} className="flex gap-4 py-3.5">
+                <span className="w-20 shrink-0 font-bold">{t.device}</span>
+                <span className="text-stone-600">{t.fix}</span>
+              </li>
+            ))}
+          </ul>
+          <p className="mt-4 text-sm leading-relaxed text-stone-600">
+            通知は端末ごとの設定です。スマホとパソコンで別々にオン・オフでき、「マイページ → プロフィールを編集 → 通知」からいつでもオフにできます。
+            通知には同期の名前が表示されるので、ロック画面の表示が気になる場合は端末の設定で調整してください。
           </p>
         </section>
 
