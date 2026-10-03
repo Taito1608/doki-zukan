@@ -32,7 +32,7 @@ export function NotificationPrompt() {
     return (
       <p className="cut flex items-center gap-2 bg-panel p-4 text-sm font-bold text-green-700">
         <Icon name="check" size={18} />
-        通知をオンにしました。誕生日の前日の夜にお知らせします。
+        通知をオンにしました。誕生日前日の夜にお知らせします。
       </p>
     );
   }
