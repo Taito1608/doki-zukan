@@ -86,7 +86,7 @@ export function planMorningNotifications(
       {
         userId,
         title: `今日は${namesOf(unwritten)}の誕生日です！`,
-        body: "まだ間に合います！🎉",
+        body: "まだ間に合います！寄せ書きでお祝いの一言を届けましょう🎉",
         url: urlFor(unwritten),
         tag,
       },
