@@ -43,7 +43,7 @@ export function planEveNotifications(people: Person[], recipients: string[], tod
       {
         userId,
         title: `明日は${namesOf(others)}の誕生日です！`,
-        body: "みんなでお祝いしましょう！🎉\n今夜のうちに寄せ書きを書いておくと、当日の朝に本人に届きます！",
+        body: "みんなでお祝いしましょう🎉\n今夜のうちに寄せ書きを書いておくと、当日の朝に本人に届きます！",
         url: urlFor(others),
         tag: `birthday-eve-${dateKey(today)}`,
       },
