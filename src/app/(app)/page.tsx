@@ -5,6 +5,7 @@ import { findCommonPoints } from "@/lib/common";
 import { UPCOMING_DAYS } from "@/lib/constants";
 import { Avatar } from "@/components/Avatar";
 import { InstallHint } from "@/components/InstallHint";
+import { NotificationPrompt } from "@/components/NotificationPrompt";
 import { Icon } from "@/components/Icon";
 import { Arrow, SectionHeading, btnPrimary, btnSecondary } from "@/components/ui";
 
@@ -50,6 +51,7 @@ export default async function HomePage() {
       </header>
 
       <InstallHint />
+      <NotificationPrompt />
 
       {myBirthdayToday && (
         <Link href={`/members/${me.id}/birthday`} className="cut block bg-brand-500 p-5 text-white active:bg-brand-600">
