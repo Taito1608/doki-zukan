@@ -43,7 +43,7 @@ export function planEveNotifications(people: Person[], recipients: string[], tod
       {
         userId,
         title: `明日は${namesOf(others)}の誕生日です！`,
-        body: "みんなでお祝いしましょう！今夜のうちに寄せ書きを書いておくと、当日の朝に届きます。",
+        body: "みんなでお祝いしましょう！🎉\n今夜のうちに寄せ書きを書いておくと、当日の朝に本人に届きます！",
         url: urlFor(others),
         tag: `birthday-eve-${dateKey(today)}`,
       },
@@ -74,7 +74,7 @@ export function planMorningNotifications(
         {
           userId,
           title: "お誕生日おめでとうございます！",
-          body: count > 0 ? `同期から寄せ書きが${count}件届いています。` : "同期からの寄せ書きを見てみましょう。",
+          body: count > 0 ? `同期から寄せ書きが${count}件届いています🎂` : "同期からの寄せ書きを見てみましょう🎂",
           url: `/members/${userId}/birthday`,
           tag,
         },
@@ -86,7 +86,7 @@ export function planMorningNotifications(
       {
         userId,
         title: `今日は${namesOf(unwritten)}の誕生日です！`,
-        body: "まだ間に合います。寄せ書きでお祝いの一言を届けましょう。",
+        body: "まだ間に合います！寄せ書きでお祝いの一言を届けましょう🎉",
         url: urlFor(unwritten),
         tag,
       },
