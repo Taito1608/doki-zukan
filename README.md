@@ -75,7 +75,13 @@ Supabase の **Authentication → URL Configuration** の **Redirect URLs** に�
 3. **Environment Variables** に `NEXT_PUBLIC_SUPABASE_URL`、`NEXT_PUBLIC_SUPABASE_ANON_KEY`、`NEXT_PUBLIC_GOOGLE_CLIENT_ID` を設定し、Deploy します。
 4. （任意）**Environment Variables** に `CRON_SECRET`（ランダムな長い文字列）を設定すると、
    Supabase の停止を防ぐ定期アクセス（`/api/cron/keepalive`、`vercel.json` で1日1回）を Vercel Cron 以外から呼べなくなります。
-5. Supabase の **Authentication → URL Configuration** を次のとおり設定します。
+5. 誕生日の通知（Web Push）を使う場合は、次の環境変数も設定します（値の作り方は `.env.local.example` を参照）。
+   - `NEXT_PUBLIC_VAPID_PUBLIC_KEY`、`VAPID_PRIVATE_KEY`：`npx web-push generate-vapid-keys` で作成
+   - `VAPID_SUBJECT`：通知の送り主の連絡先（`mailto:` で始まるメールアドレスか、アプリの URL）
+   - `SUPABASE_SERVICE_ROLE_KEY`：Supabase の **Project Settings → API** の service_role キー。**絶対に公開しない**こと
+   あわせて Supabase の SQL Editor で `supabase/migrations/20261003_add_push_subscriptions.sql` を実行します。
+   通知は `vercel.json` の Cron で、前日19時ごろ（`/api/cron/notify-eve`）と当日8時ごろ（`/api/cron/notify-morning`）に送られます。
+6. Supabase の **Authentication → URL Configuration** を次のとおり設定します。
    - **Site URL**：`https://<あなたのアプリ>.vercel.app`
    - **Redirect URLs**：`https://<あなたのアプリ>.vercel.app/**` を追加
 

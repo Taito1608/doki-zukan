@@ -1,4 +1,8 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "crons": [{ "path": "/api/cron/keepalive", "schedule": "0 0 * * *" }]
+  "crons": [
+    { "path": "/api/cron/keepalive", "schedule": "0 0 * * *" },
+    { "path": "/api/cron/notify-eve", "schedule": "0 10 * * *" },
+    { "path": "/api/cron/notify-morning", "schedule": "0 23 * * *" }
+  ]
 }

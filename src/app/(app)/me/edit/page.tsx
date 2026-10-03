@@ -1,5 +1,6 @@
 import { attachPhotoUrls, requireProfile } from "@/lib/data";
 import { deleteAccount, signOut } from "@/app/actions";
+import { NotificationSetting } from "@/components/NotificationSetting";
 import { ProfileForm } from "@/components/ProfileForm";
 import { PageHeading } from "@/components/ui";
 
@@ -18,6 +19,8 @@ export default async function EditProfilePage() {
         next="profile"
         submitLabel="保存する"
       />
+
+      <NotificationSetting />
 
       <section className="mt-12 space-y-4 border-t border-stone-200 pt-8">
         <h2 className="text-lg font-bold">アカウント</h2>

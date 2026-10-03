@@ -199,3 +199,34 @@ export async function deleteAccount(formData: FormData) {
   await supabase.auth.signOut();
   redirect("/login");
 }
+
+/* ---------------- 誕生日の通知（Web Push） ---------------- */
+
+const PUSH_ENDPOINT_PATTERN = /^https:\/\/[^\s]+$/;
+
+/** この端末を通知の送り先として登録する（同じ端末なら上書き） */
+export async function savePushSubscription(sub: {
+  endpoint: string;
+  p256dh: string;
+  auth: string;
+}): Promise<ActionState> {
+  const { supabase, userId } = await currentUserId();
+  if (!PUSH_ENDPOINT_PATTERN.test(sub.endpoint) || sub.endpoint.length > 1000 || !sub.p256dh || !sub.auth) {
+    return { error: "通知の登録情報が正しくありません。" };
+  }
+  const { error } = await supabase.from("push_subscriptions").upsert({
+    endpoint: sub.endpoint,
+    user_id: userId,
+    p256dh: sub.p256dh.slice(0, 200),
+    auth: sub.auth.slice(0, 100),
+  });
+  if (error) return { error: "通知をオンにできませんでした。もう一度お試しください。" };
+  return { ok: true };
+}
+
+/** この端末の通知の登録を解除する */
+export async function deletePushSubscription(endpoint: string): Promise<ActionState> {
+  const { supabase, userId } = await currentUserId();
+  await supabase.from("push_subscriptions").delete().eq("endpoint", endpoint).eq("user_id", userId);
+  return { ok: true };
+}
