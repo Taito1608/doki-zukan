@@ -74,7 +74,7 @@ export function NotificationPrompt() {
         </p>
       ) : (
         <>
-          <p className="mt-2 text-stone-700">同期の誕生日の前日の夜に、お知らせが届きます。</p>
+          <p className="mt-2 text-stone-700">同期の誕生日前日の夜に、お知らせが届きます。</p>
           <button
             onClick={turnOn}
             disabled={pending}
